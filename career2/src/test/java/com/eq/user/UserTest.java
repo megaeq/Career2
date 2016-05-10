@@ -1,6 +1,7 @@
 package com.eq.user;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -17,6 +18,7 @@ import com.eq.dao.user.entity.User;
 import com.eq.dao.user.inte.IUser;
 import com.eq.service.UserService;
 import com.eq.util.JsonUtils;
+import com.google.common.collect.Maps;
 
 import net.sf.json.JSONObject;
 
@@ -28,20 +30,29 @@ public class UserTest {
 	@Resource
 	private IUser iUser;
 	//@Test
-	public void test() {
+	public void add() {
 		//userService.add();
 		User user = new User();
 		user.setPassword("123456");
 		user.setUserName("mm");
 		iUser.save(user);
 	}
+	//@Test
+	public void update() {
+		User user = iUser.findOne(1l);
+		user.setUserName("aa");
+		iUser.save(user);
+	}
+	
 	@Test
 	public void findByUserName() {
 		Sort sort = new Sort(Sort.Direction.ASC,"id").and(new Sort(Sort.Direction.DESC,"userName"));
 		Pageable pageable = new PageRequest(0, 2,sort);
 		
 		Page<User> page = iUser.findByUserName("mm", pageable);
-		JsonUtils.prettyPrintedJson(page);
+		List<User> list = iUser.selectList(Maps.newHashMap());
+		System.out.println(list.size());
+		//JsonUtils.prettyPrintedJson(page.getContent().get(0));
 	}
 	
 }
