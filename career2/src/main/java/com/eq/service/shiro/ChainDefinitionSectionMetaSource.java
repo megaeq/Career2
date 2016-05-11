@@ -26,9 +26,7 @@ public class ChainDefinitionSectionMetaSource implements FactoryBean<Ini.Section
 	@Override
 	public Section getObject() throws Exception
 	{
-		Map<String, Object> params = new HashMap<String, Object>();
-		List<Resource> list = iResource.selectList(params);
-		
+		List<Resource> list = iResource.findAll();
 		Ini ini = new Ini();  
         //加载默认的url  
         ini.load(filterChainDefinitions);  

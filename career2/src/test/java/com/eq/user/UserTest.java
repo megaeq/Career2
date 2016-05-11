@@ -17,10 +17,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.eq.dao.user.entity.User;
 import com.eq.dao.user.inte.IUser;
 import com.eq.service.UserService;
-import com.eq.util.JsonUtils;
 import com.google.common.collect.Maps;
 
-import net.sf.json.JSONObject;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
@@ -43,8 +41,13 @@ public class UserTest {
 		user.setUserName("aa");
 		iUser.save(user);
 	}
-	
 	@Test
+	public void getrole() {
+		User user = iUser.findOne(1l);
+		System.out.println(user.getUserRoleRelList().get(0).getRole().getName());
+	}
+	
+	//@Test
 	public void findByUserName() {
 		Sort sort = new Sort(Sort.Direction.ASC,"id").and(new Sort(Sort.Direction.DESC,"userName"));
 		Pageable pageable = new PageRequest(0, 2,sort);

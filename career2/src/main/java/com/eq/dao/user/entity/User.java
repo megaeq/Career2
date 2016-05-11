@@ -4,6 +4,7 @@ package com.eq.dao.user.entity;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -28,6 +29,9 @@ public class User extends BaseEntity{
 	private Long id;
 	private String userName;
 	private String password;
+	@Column(name="is_lock")
+	private Integer isLock;//锁定，1为锁定，0为未锁定
+	private String salt;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy="user")
 	@OrderBy(value = "id")
 	private List<UserRoleRel> userRoleRelList;
@@ -54,6 +58,21 @@ public class User extends BaseEntity{
 	}
 	public void setUserRoleRelList(List<UserRoleRel> userRoleRelList) {
 		this.userRoleRelList = userRoleRelList;
+	}
+	public String getCredentialsSalt() {
+		return userName+salt;
+	}
+	public String getSalt() {
+		return salt;
+	}
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+	public Integer getIsLock() {
+		return isLock;
+	}
+	public void setIsLock(Integer isLock) {
+		this.isLock = isLock;
 	}
 	
 	

@@ -1,9 +1,7 @@
 package com.eq.service.shiro;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.shiro.authc.AuthenticationException;
@@ -21,38 +19,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.eq.dao.system.entity.Permission;
 import com.eq.dao.system.entity.Role;
-import com.eq.dao.system.inte.IPermission;
-import com.eq.dao.system.inte.IRole;
+import com.eq.dao.system.entity.RolePermissionRel;
+import com.eq.dao.system.entity.UserRoleRel;
 import com.eq.dao.user.entity.User;
 import com.eq.dao.user.inte.IUser;
+import com.google.common.collect.Lists;
 
 public class MyRealm extends AuthorizingRealm
 {
 	@Autowired
 	private IUser iUser;
-	@Autowired
-	private IRole iRole;
-	@Autowired
-	private IPermission iPermission;
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals)
 	{
 		String username = (String)principals.getPrimaryPrincipal();
 		User user = iUser.findByUserName(username);
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("userId", user.getId());
-		params.put("available", 1);
-		List<Role> roleList = iRole.selectList(params);
-		
-		
+		List<Role> roleList = Lists.newArrayList();
+		for(UserRoleRel ur:user.getUserRoleRelList()) {
+			if(ur.getRole().getAvailable()==1) {
+				roleList.add(ur.getRole());
+			}
+		}
 		Set<String> roleSet = new HashSet<String>();
 		Set<String> permissionSet = new HashSet<String>();
 		for(int i=0;i<roleList.size();i++) {
 			roleSet.add(roleList.get(i).getRole());
-			params.clear();
-			params.put("roleId", roleList.get(i).getId());
-			params.put("available", 1);
-			List<Permission> permissionList = iPermission.selectList(params);
+			List<Permission> permissionList = Lists.newArrayList();
+			for(RolePermissionRel rp:roleList.get(i).getRolePermissionRelList()) {
+				if(rp.getPermission().getAvailable()==1) {
+					permissionList.add(rp.getPermission());
+				}
+			}
 			for(int j=0;j<permissionList.size();j++) {
 				permissionSet.add(permissionList.get(j).getPermission());
 			}
@@ -69,16 +66,16 @@ public class MyRealm extends AuthorizingRealm
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException
 	{
 		String username = (String)token.getPrincipal();
-		User user = userImpl.selectOne(username);
+		User user = iUser.findByUserName(username);
 		if(user==null) {
 			throw new UnknownAccountException();//没找到帐号
 		}
-		if(user.getLock()==1) {
+		if(user.getIsLock()==1) {
 			throw new LockedAccountException(); //帐号锁定
 		}
 		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                user.getName(), //用户名
-                user.getPwd(), //密码
+                user.getUserName(), //用户名
+                user.getPassword(), //密码
                 ByteSource.Util.bytes(user.getCredentialsSalt()+"1991"),//salt=username+salt
                 getName()  //realm name
         );

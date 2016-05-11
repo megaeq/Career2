@@ -13,7 +13,6 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
 	<servlet>
 		<servlet-name>sample</servlet-name>  
 		<servlet-class>
