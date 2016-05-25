@@ -13,7 +13,6 @@
             diskExpiryThreadIntervalSeconds="120"
             memoryStoreEvictionPolicy="LRU"
             />
-    <!-- 登录记录缓存 锁定10分钟 -->
     <cache name="passwordRetryCache"
            maxElementsInMemory="10000"
             eternal="false"
