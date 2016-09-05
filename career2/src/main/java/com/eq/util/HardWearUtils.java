@@ -11,7 +11,6 @@ public class HardWearUtils
 	public void testCpuPerc()
 	{
 		Sigar sigar = new Sigar();
-		sigar.
 		// 方式一，主要是针对一块CPU的情况
 		CpuPerc cpu;
 		try
