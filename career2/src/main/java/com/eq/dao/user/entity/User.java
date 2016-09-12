@@ -29,8 +29,8 @@ public class User extends BaseEntity{
 	private Long id;
 	private String userName;
 	private String password;
-	@Column(name="is_lock",columnDefinition="int 0 default")
-	private Integer isLock;//锁定，1为锁定，0为未锁定
+	@Column(name="is_lock",columnDefinition="tinyint default 0")
+	private int isLock;//锁定，1为锁定，0为未锁定
 	private String salt;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy="user")
 	@OrderBy(value = "id")
@@ -68,10 +68,12 @@ public class User extends BaseEntity{
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}
-	public Integer getIsLock() {
+	public int getIsLock()
+	{
 		return isLock;
 	}
-	public void setIsLock(Integer isLock) {
+	public void setIsLock(int isLock)
+	{
 		this.isLock = isLock;
 	}
 	

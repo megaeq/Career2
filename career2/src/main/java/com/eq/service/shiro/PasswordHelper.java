@@ -19,4 +19,8 @@ public class PasswordHelper
 		String newPassword = new SimpleHash(algorithmName, user.getPassword(), ByteSource.Util.bytes(user.getCredentialsSalt()+"1991"), hashIterations).toHex();
 		user.setPassword(newPassword);
 	}
+	
+	public static boolean validatePassword(User user,String password) {
+		return user.getPassword().equals(new SimpleHash(algorithmName, password, ByteSource.Util.bytes(user.getCredentialsSalt()+"1991"), hashIterations).toHex());
+	}
 }

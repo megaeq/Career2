@@ -181,6 +181,7 @@
 	            /css/** = anon
 	            /image/** = anon
 	            /command/getfooter = authc
+	            /user/login = anon
 	            /** = authc
 	            
 	        </value>   

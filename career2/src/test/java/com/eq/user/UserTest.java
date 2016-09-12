@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.eq.dao.user.entity.User;
 import com.eq.dao.user.inte.IUser;
-import com.eq.service.UserService;
+import com.eq.service.user.UserService;
 import com.google.common.collect.Maps;
 
 
@@ -35,9 +35,13 @@ public class UserTest {
 		user.setUserName("mm");
 		iUser.save(user);
 	}
-	@Test
+	//@Test
 	public void add2() {
-		userService.add("bake", "123456");
+		System.out.println(userService.add("bake1", "123456"));
+	}
+	@Test
+	public void login() {
+		System.out.println(userService.login("bake1", "123456"));
 	}
 	//@Test
 	public void update() {
