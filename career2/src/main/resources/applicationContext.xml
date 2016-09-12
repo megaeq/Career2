@@ -180,7 +180,9 @@
 	            /js/** = anon
 	            /css/** = anon
 	            /image/** = anon
-	            /** = user  
+	            /command/getfooter = authc
+	            /** = authc
+	            
 	        </value>   
 	    </property>  
 	</bean>  

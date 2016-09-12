@@ -35,13 +35,17 @@ public class UserTest {
 		user.setUserName("mm");
 		iUser.save(user);
 	}
+	@Test
+	public void add2() {
+		userService.add("bake", "123456");
+	}
 	//@Test
 	public void update() {
 		User user = iUser.findOne(1l);
 		user.setUserName("aa");
 		iUser.save(user);
 	}
-	@Test
+	//@Test
 	public void getrole() {
 		User user = iUser.findOne(1l);
 		System.out.println(user.getUserRoleRelList().get(0).getRole().getName());

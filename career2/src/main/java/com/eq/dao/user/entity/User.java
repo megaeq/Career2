@@ -29,7 +29,7 @@ public class User extends BaseEntity{
 	private Long id;
 	private String userName;
 	private String password;
-	@Column(name="is_lock")
+	@Column(name="is_lock",columnDefinition="int 0 default")
 	private Integer isLock;//锁定，1为锁定，0为未锁定
 	private String salt;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy="user")
