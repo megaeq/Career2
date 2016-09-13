@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Component
 @RequestMapping("command")
@@ -13,8 +14,10 @@ public class CommandManage
 {
 	
 	@RequestMapping("process")
-	public void process() {
-		
+	@ResponseBody
+	public String process(String command) {
+		System.out.println(command);
+		return "[\"你\",\"好\",\"啊\"]";
 	}
 	@RequestMapping("getfooter")
 	public String getfooter(Integer i,Integer j) {

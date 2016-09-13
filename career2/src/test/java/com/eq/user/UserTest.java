@@ -35,11 +35,11 @@ public class UserTest {
 		user.setUserName("mm");
 		iUser.save(user);
 	}
-	//@Test
-	public void add2() {
-		System.out.println(userService.add("bake1", "123456"));
-	}
 	@Test
+	public void add2() {
+		System.out.println(userService.add("bake2", "123456"));
+	}
+	//@Test
 	public void login() {
 		System.out.println(userService.login("bake1", "123456"));
 	}

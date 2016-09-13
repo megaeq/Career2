@@ -20,9 +20,24 @@ html,body {height: 100%;}
 }
 </style>
 <%@ include file="header.jsp" %>
+<link rel="stylesheet" href="<%=basePath%>js/jqueryui/jquery-ui.min.css">
+<script src="<%=basePath%>js/jqueryui/jquery-ui.min.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		console.log("header");
+		$( "#input" ).autocomplete({
+			source: function( request, response ) {
+				$.ajax({
+		            type: "post",
+		            url: "<%=basePath%>command/process",
+		            data: {command:request.term},
+		            dataType: "json",
+		            success: function(data,textStatus){
+		            	response(data);
+				    }
+				});
+			},
+			minLength:2
+		});
 	});
 </script>
 </head>
@@ -31,7 +46,7 @@ html,body {height: 100%;}
 <div id="content" class="container">
 	<div class="row">
 		<div class="col-md-6 col-sm-4 col-md-offset-3 col-sm-offset-4" >
-			<input type="text" class="form-control input-lg" id="input" >
+			<input type="text" class="form-control input-lg" id="input">
 		</div>
 	</div>
 </div>

@@ -10,6 +10,7 @@ import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.Ini.Section;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 
 import com.eq.dao.system.entity.Resource;
 import com.eq.dao.system.inte.IResource;
@@ -26,7 +27,8 @@ public class ChainDefinitionSectionMetaSource implements FactoryBean<Ini.Section
 	@Override
 	public Section getObject() throws Exception
 	{
-		List<Resource> list = iResource.findAll();
+		Sort sort = new Sort(Sort.Direction.DESC,"id");
+		List<Resource> list = iResource.findAll(sort);
 		Ini ini = new Ini();  
         //加载默认的url  
         ini.load(filterChainDefinitions);  
@@ -55,6 +57,11 @@ public class ChainDefinitionSectionMetaSource implements FactoryBean<Ini.Section
 	public void setFilterChainDefinitions(String filterChainDefinitions)
 	{
 		this.filterChainDefinitions = filterChainDefinitions;
+	}
+	
+	public static void main(String[] args)
+	{
+		System.out.println(MessageFormat.format(PREMISSION_STRING,"command:process"));
 	}
 
 }
