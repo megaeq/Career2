@@ -28,7 +28,7 @@ html,body {height: 100%;}
 			source: function( request, response ) {
 				$.ajax({
 		            type: "post",
-		            url: "<%=basePath%>command/process",
+		            url: "<%=basePath%>command/getCommandList",
 		            data: {command:request.term},
 		            dataType: "json",
 		            success: function(data,textStatus){

@@ -3,6 +3,7 @@ package com.eq.dao.command.entity;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -28,6 +29,8 @@ public class Command extends BaseEntity
 	private Integer type;
 	private String name;
 	private String value;
+	@Column(columnDefinition=" int default 0")
+	private Long times;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy="command")
 	@OrderBy(value = "id")
 	private List<CommandComponentRel> commandComponentRelList;
@@ -70,6 +73,14 @@ public class Command extends BaseEntity
 	public void setCommandComponentRelList(List<CommandComponentRel> commandComponentRelList)
 	{
 		this.commandComponentRelList = commandComponentRelList;
+	}
+	public Long getTimes()
+	{
+		return times;
+	}
+	public void setTimes(Long times)
+	{
+		this.times = times;
 	}
 	
 
